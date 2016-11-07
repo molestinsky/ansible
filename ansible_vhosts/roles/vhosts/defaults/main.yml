@@ -1,0 +1,4 @@
+# defaults file for apache
+---
+  #user_name: web_user
+  site_path: "/home/{{ user_name }}"

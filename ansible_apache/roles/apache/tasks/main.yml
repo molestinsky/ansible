@@ -1,0 +1,9 @@
+#tasks/main.yml
+---
+- name: Run CentOS-specific tasks
+  include: centos.yml
+  when: ansible_os_family == "RedHat"
+
+- name: Run Ubuntu-specific tasks
+  include: ubuntu.yml
+  when: ansible_os_family == "Debian"

@@ -1,0 +1,21 @@
+#tasks/centos.yml
+---
+- name: Disable selinux
+  selinux: state=disabled
+  notify: centos reboot
+
+- name: Install httpd
+  yum: name=httpd update_cache=yes state=present
+  notify:
+    - httpd enable
+
+- name: Create vhosts directory
+  file: path=/etc/httpd/vhosts.d state=directory
+
+- name: Change httpd.conf
+  template:
+    src: httpd.conf.j2
+    dest: /etc/httpd/conf/httpd.conf
+  notify:
+    - httpd enable
+

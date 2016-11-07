@@ -1,0 +1,11 @@
+<VirtualHost *:80>
+ServerName {{ domain }}
+ServerAlias www.{{ domain }}
+ErrorLog {{ site_path }}/{{ domain }}/logs/error.log
+DocumentRoot {{ site_path }}/{{ domain }}/www
+<Directory "{{ site_path }}/{{ domain }}/www">
+Order allow,deny
+Allow from all
+Require all granted
+</Directory>
+</VirtualHost>

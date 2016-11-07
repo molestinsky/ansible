@@ -1,0 +1,21 @@
+#handlers/handlers.yml
+---
+- name: restart apache
+  service: name=apache2 state=restarted
+  when: ansible_os_family == "Debian"
+
+#- name: httpd enable
+#  command: systemctl enable httpd
+
+- name: httpd enable
+  service: name=httpd enabled=yes state=started
+
+- name: httpd reload
+  service: name=httpd state=reloaded
+
+- name: centos reboot
+  command: /sbin/shutdown -r +1
+  async: 0
+  poll: 0
+  ignore_errors: true
+

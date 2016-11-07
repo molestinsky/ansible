@@ -1,0 +1,7 @@
+<VirtualHost *:80>
+	ServerName {{domain}}
+	ServerAlias www.{{domain}}
+	DocumentRoot {{ site_path }}/{{ domain }}/www
+	ErrorLog {{ site_path }}/{{ domain }}/logs/error.log
+	CustomLog {{ site_path }}/{{ domain }}/logs/access.log combined
+</VirtualHost>
