@@ -1,0 +1,15 @@
+#tasks/ubuntu.yml
+---
+- name: Install the Python MySQLB module
+  apt: pkg=python-mysqldb state=present
+
+- name: Install MySQL
+  apt: name=mysql-server state=present
+
+- name: copy .my.cnf file with root password credentials
+  template:
+    src: ubuntu.my.cnf.j2
+    dest: ~/.my.cnf
+
+- name: Start MySQL
+  service: name=mysql state=started enabled=true
