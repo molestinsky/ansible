@@ -1,1 +1,2 @@
 ansible_lamp/.vagrant
+ansible_lamp/logs/ansible.log
