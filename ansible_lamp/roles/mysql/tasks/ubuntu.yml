@@ -1,11 +1,15 @@
 #tasks/ubuntu.yml
 ---
+# Зачем два отдельных таска если можно сделать один с with_items?
 - name: Install the Python MySQLB module
   apt: pkg=python-mysqldb state=present
 
 - name: Install MySQL
   apt: name=mysql-server state=present
 
+# Это нужно вынести в общий файл, и создавать его уже после успешной смены пароля рута.
+# В самом файле достаточно оставить только раздел [client], а в нём только пункты login и password.
+# А вот конфиги нужно хранить в /etc/my.cnf
 - name: copy .my.cnf file with root password credentials
   template:
     src: ubuntu.my.cnf.j2

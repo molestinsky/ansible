@@ -7,3 +7,5 @@
 - name: Run Ubuntu-specific tasks
   include: ubuntu.yml
   when: ansible_os_family == "Debian"
+
+# Не хватает создания файла php.ini с минимальными настройками безопасности, указанием часового пояса.

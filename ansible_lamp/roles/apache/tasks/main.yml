@@ -1,5 +1,6 @@
 #tasks/main.yml
 ---
+# Не хватает проверок. Если apache уже установлен, остальные такси не должны выполняться.
 - name: Run CentOS-specific tasks
   include: centos.yml
   when: ansible_os_family == "RedHat"

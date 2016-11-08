@@ -1,5 +1,6 @@
 #tasks/centos.yml
 ---
+# Ненужные комменты нужно удалять
 #- name: Install the Python MySQLB module
  # yum: pkg=python-mysqldb state=present
 
@@ -10,6 +11,9 @@
     - mariadb-server
     - MySQL-python
 
+# Это нужно вынести в общий файл, и создавать его уже после успешной смены пароля рута.
+# В самом файле достаточно оставить только раздел [client], а в нём только пункты login и password.
+# А вот конфиги нужно хранить в /etc/my.cnf
 - name: copy .my.cnf file with root password credentials
   template:
     src: centos.my.cnf.j2
@@ -17,6 +21,3 @@
 
 - name: Start MariaDB
   service: name=mariadb state=started enabled=true
-
-
-

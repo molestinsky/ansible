@@ -8,14 +8,43 @@
   include: ubuntu.yml
   when: ansible_os_family == "Debian"
 
+# Не хватает проверок. Если MySQL уже установлен, остальные такси не должны выполняться.
+
+# Когда меняешь пароль для существующего пользователя, не нужно указывать параметр priv, это никчему.
+# Плюс можно сделать проще:
+# - name: Update mysql root password
+#   mysql_user: name=root password={{root_pass}} host_all=yes
+# Обрати внимание на параметр host_all. Благодаря ему пароль поменяется для всех пользователей root,
+# ведь по умолчанию их создаётся несколько:
+# MariaDB [(none)]> select user,host from mysql.user;
+# +------------+-----------------------+
+# | user       | host                  |
+# +------------+-----------------------+
+# | root       | 127.0.0.1             |
+# | root       | ::1                   |
+# | root       | localhost             |
+# | user_login | localhost             |
+# |            | localhost.localdomain |
+# | root       | localhost.localdomain |
+# +------------+-----------------------+
+# 6 rows in set (0.00 sec)
 - name: Update mysql root password
   mysql_user: name=root host={{host}} password={{root_pass}} login_user={{root_login}} login_password="" priv="*.*:ALL,GRANT"
 
+# Это лишнее, для добавления баз и польщователей лучше сделать отдельный плейбук.
 - name: Create user database
   mysql_db: name={{user_db}} login_user={{root_login}} login_password={{root_pass}} state=present 
 
+# Это тоже лишнее, см. выше.
 - name: Create user with all priveleges for {{user_db}} database
   mysql_user: name={{user_login}} password={{user_pass}} priv={{user_db}}.*:ALL state=present update_password=on_create login_user={{root_login}} login_password={{root_pass}} state=present
 
+# Ещё нужно удалять базу "test"
+
+# Обрати внимание на табличку выше, анонимных пользователей тоже создаётся больше одного,
+# потому параметр host_all здесь тоже будет кстати.
+# И ещё, кавычки вокруг absent не нужны.
+# - name: Delete anonymous user
+#   mysql_user: user="" host_all=yes state=absent
 - name: Delete anonymous user
   mysql_user: user="" state="absent"
