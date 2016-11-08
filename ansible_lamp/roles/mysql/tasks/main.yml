@@ -31,7 +31,7 @@
 - name: Update mysql root password
   mysql_user: name=root host={{host}} password={{root_pass}} login_user={{root_login}} login_password="" priv="*.*:ALL,GRANT"
 
-# Это лишнее, для добавления баз и польщователей лучше сделать отдельный плейбук.
+# Это лишнее, для добавления баз и пользователей лучше сделать отдельный плейбук.
 - name: Create user database
   mysql_db: name={{user_db}} login_user={{root_login}} login_password={{root_pass}} state=present 
 
