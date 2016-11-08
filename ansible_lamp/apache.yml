@@ -3,6 +3,4 @@
 - hosts: all
   become: true
   roles:
-    - vhosts
-
-
+    - apache
