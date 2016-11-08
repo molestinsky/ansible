@@ -1,69 +1,59 @@
 [client]
-port		= 3306
-socket		= /var/lib/mysql/mysql.sock
-user=root
-password={{root_pass}}
+port					= {{client_port}}
+socket					= {{client_mariadb_socket}}
+user					= {{root_login}}
+password				= {{root_pass}}
 
 [mysqld_safe]
-socket		= /var/lib/mysql/mysql.sock
-nice		= 0
-log-error=/var/log/mariadb/mariadb.log
-pid-file=/var/run/mariadb/mariadb.pid
+socket					= {{safe_mariadb_socket}}
+nice					= {{safe_nice}}
+log-error				= {{mariadb_log_error}}
+pid-file 				= {{mariadb_pid_file}}
 
 [mysqld]
-user		= mysql
-socket		= /var/lib/mysql/mysql.sock
-port		= 3306
-basedir		= /usr
-datadir		= /var/lib/mysql
-tmpdir		= /tmp
-lc-messages-dir	= /usr/share/mysql
-skip-external-locking
+user					= {{user}}
+socket					= {{mariadb_socket}}
+port					= {{port}}
+basedir					= /usr
+datadir					= /var/lib/mysql
+tmpdir					= /tmp
+lc-messages-dir			= {{lc_messages_dir}}
+{{locking}}
 
-bind-address		= 127.0.0.1
+bind-address			= {{bind_address}}
 
-key_buffer		= 16M
-max_allowed_packet	= 16M
-thread_stack		= 192K
-thread_cache_size       = 8
+key_buffer				= {{key_buffer}}
+max_allowed_packet		= {{max_allowed_packet}}
+thread_stack			= {{thread_stack}}
+thread_cache_size       = {{thread_cache_size}}
 
-myisam-recover         = BACKUP
-#max_connections        = 100
-#table_cache            = 64
-#thread_concurrency     = 10
-#
-# * Query Cache Configuration
-#
-query_cache_limit	= 1M
-query_cache_size        = 16M
+myisam-recover       	= {{myisam_recover}}
+max_connections      	= {{max_connections}}
+table_cache             = {{table_cache}}
+thread_concurrency      = {{thread_concurrency}}
 
-#server-id		= 1
-#log_bin			= /var/log/mysql/mysql-bin.log
-expire_logs_days	= 10
-max_binlog_size         = 100M
-#binlog_do_db		= include_database_name
-#binlog_ignore_db	= include_database_name
+query_cache_limit		= {{query_cache_limit}}
+query_cache_size        = {{query_cache_size}}
+
+#server-id				= 1
+#log_bin				= /var/log/mysql/mysql-bin.log
+expire_logs_days		= {{expire_logs_days}}
+max_binlog_size         = {{max_binlog_size}}
 
 # chroot = /var/lib/mysql/
 
-# ssl-ca=/etc/mysql/cacert.pem
-# ssl-cert=/etc/mysql/server-cert.pem
-# ssl-key=/etc/mysql/server-key.pem
+# ssl-ca 				= /etc/mysql/cacert.pem
+# ssl-cert 				= /etc/mysql/server-cert.pem
+# ssl-key 				= /etc/mysql/server-key.pem
 
 [mysqldump]
-quick
-quote-names
-max_allowed_packet	= 16M
+{{quick}}
+{{quote_names}}
+max_allowed_packet		= {{max_allowed_packet}}
 
-[mysql]
-#no-auto-rehash	# faster start of mysql but no tab completition
 
 [isamchk]
-key_buffer		= 16M
+key_buffer				= {{isamchk_key_buffer}}
 
-#
-# * IMPORTANT: Additional settings that can override those from this file!
-#   The files must end with '.cnf', otherwise they'll be ignored.
-#
 !includedir /etc/my.cnf.d
 

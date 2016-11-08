@@ -6,3 +6,51 @@ user_pass: user_pass
 host: localhost
 port: 3306
 user_db: user_db
+
+#mysqld_safe
+safe_socket: /var/run/mysqld/mysqld.sock
+safe_nice: 0
+mariadb_pid_file: /var/run/mariadb/mariadb.pid
+safe_mariadb_socket: /var/lib/mysql/mysql.sock
+mariadb_log_error: /var/log/mariadb/mariadb.log
+
+#mysqld
+user: mysql
+pid_file: /var/run/mysqld/mysqld.pid
+socket:   /var/run/mysqld/mysqld.sock
+
+mariadb_socket: /var/lib/mysql/mysql.sock
+
+key_buffer: "16M"
+max_allowed_packet: "16M"
+thread_stack: "192K"
+thread_cache_size: 8
+myisam_recover: BACKUP
+query_cache_limit: "1M"
+query_cache_size: "16M"
+expire_logs_days: 10
+max_binlog_size: "100M"
+bind_address: 127.0.0.1
+lc_messages_dir: /usr/share/mysql
+locking: skip-external-locking
+max_connections: 100
+table_cache: 64
+thread_concurrency: 10
+log_error: /var/log/mysql/error.log
+log_slow_queries: /var/log/mysql/mysql-slow.log
+
+#client
+client_port: 3306
+client_socket: /var/run/mysqld/mysqld.sock
+client_user: root
+client_password: root
+
+client_mariadb_socket: /var/lib/mysql/mysql.sock
+
+#mysqldump
+quick: quick
+quote_names: quote-names
+dump_max_allowed_packet: "16M"
+
+#isamchk
+isamchk_key_buffer: "16M"
