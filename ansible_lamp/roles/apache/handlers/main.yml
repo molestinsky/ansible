@@ -1,5 +1,7 @@
 #handlers/handlers.yml
 ---
+# Обработчики названы нелогично. В одном имя сервиса идёт первым словом, во втором — последним.
+# Это неверно и создаёт беспорядок и путаницу.
 - name: restart apache
   service: name=apache2 state=restarted
   when: ansible_os_family == "Debian"
@@ -7,6 +9,7 @@
 - name: httpd enable
   service: name=httpd enabled=yes state=started
 
+# Этот обработчик где-то используетя или он здесь не нужен?
 - name: centos reboot
   command: /sbin/shutdown -r +1
   async: 0

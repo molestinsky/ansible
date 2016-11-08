@@ -3,6 +3,9 @@
 - name: Create {{ user_name }}
   user: name={{ user_name }}
 
+# Что случится, если каталог с доменом уже есть?
+# Нужны проверки.
+
 - name: Create site directories
   file: path={{ site_path }}/{{ domain }}/{{ item }} state=directory recurse=yes mode="0755" owner={{ user_name }}
   with_items:
