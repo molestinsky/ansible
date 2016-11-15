@@ -1,5 +1,0 @@
-# Этот файл не нужен
-# http://docs.ansible.com/ansible/intro_configuration.html#hostfile
-[cloud]
-188.42.218.216
-188.42.218.198
