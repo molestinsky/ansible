@@ -1,0 +1,22 @@
+#tasks/main.yml
+---
+#Проверка существования директорий для виртуального хоста, хотя эти директории не будут пересоздаваться,
+# если они уже существуют. Я бы сделал только проверку существования файла {{domain}}.conf
+- name: Check if directory www exists
+  stat: path="{{ site_path }}/{{ domain }}/www"
+  register: www
+
+- name: Check if directory logs exists
+  stat: path="{{ site_path }}/{{ domain }}/logs"
+  register: logs
+
+#Проверка существования vhosts  
+- name: Check httpd vhost {{ domain }}.conf
+  stat: path="/etc/httpd/vhosts.d/{{domain}}.conf"
+  register: centos_vhost
+  when: ansible_os_family == "RedHat"
+
+- name: Check apache2 vhost {{ domain }}.conf
+  stat: path="/etc/apache2/sites-available/{{domain}}.conf"
+  register: ubuntu_vhost
+  when: ansible_os_family == "Debian"

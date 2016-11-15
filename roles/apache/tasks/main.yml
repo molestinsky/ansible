@@ -1,0 +1,23 @@
+#tasks/main.yml
+---
+# Сделал подобную проверку, хотя по дефолту директива state у yum и apt имеет значение present 
+# и, если менеджер пакетов обнаруживает устанавливаемый пакет в системе, то ansible пропускает установку данного пакета
+- name: Ensure apache2 is installed
+  shell: dpkg-query -W apache2
+  register: apache2_installed
+  failed_when: apache2_installed.rc > 1
+  when: ansible_os_family == "Debian"
+
+- name: Ensure httpd is installed
+  shell: yum list installed httpd warn=no
+  register: httpd_installed 
+  failed_when: httpd_installed.rc > 1
+  when: ansible_os_family == "RedHat"
+
+- name: Run CentOS-specific tasks
+  include: centos.yml
+  when: ansible_os_family == "RedHat" and httpd_installed.rc == 1
+
+- name: Run Ubuntu-specific tasks
+  include: ubuntu.yml
+  when: ansible_os_family == "Debian" and apache2_installed.rc == 1

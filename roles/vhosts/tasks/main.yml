@@ -1,0 +1,21 @@
+#tasks/main.yml
+---
+#Если пользователь уже существует, то он не создаётся заново
+- name: Create {{ user_name }}
+  user: name={{ user_name }}
+
+#На всякий случай проверка существования директорий для виртуального хоста
+- name: Ensure virtual host directorires exist
+  include: validation.yml
+
+- name: Create directories
+  include: directories.yml
+  when: www.stat.exists == False and logs.stat.exists == False
+
+- name: Run CentOS-specific tasks
+  include: centos.yml
+  when: ansible_os_family == "RedHat" and centos_vhost.stat.exists == False
+
+- name: Run Ubuntu-specific tasks
+  include: ubuntu.yml
+  when: ansible_os_family == "Debian" and ubuntu_vhost.stat.exists == False

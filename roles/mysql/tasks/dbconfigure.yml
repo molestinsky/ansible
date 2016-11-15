@@ -1,0 +1,15 @@
+#tasks/dbconfig.yml
+---
+- name: Copy .my.cnf file to user directory
+  template:
+    src: ubuntu.my.cnf.j2
+    dest: ~/.my.cnf
+
+- name: Update mysql root password
+  mysql_user: name=root host_all=yes password={{root_pass}} login_user={{root_login}} login_password=""
+
+- name: Delete anonymous users
+  mysql_user: name='' host_all=yes state=absent
+
+- name: Remove the test database
+  mysql_db: name=test state=absent

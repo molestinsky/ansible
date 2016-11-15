@@ -1,0 +1,11 @@
+#tasks/ubuntu.yml
+---
+- name: Install apache2 
+  apt: name=apache2 update_cache=yes state=latest
+
+- name: Generate /etc/apache2/apache2.conf
+  template:
+    src: apache2.conf.j2
+    dest: /etc/apache2/apache2.conf
+  notify:
+    - Apache2 restart

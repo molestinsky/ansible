@@ -1,0 +1,29 @@
+#php/tasks/ubuntu.yml
+---
+- name: Install php5
+  apt: name={{item}} state=present
+  with_items:
+    - php5
+    - php5-cli
+    - php5-mysql
+    - libapache2-mod-php5
+    - php5-gd
+    - php5-ldap
+    - php5-odbc
+    - php5-xmlrpc
+    - php5-snmp
+    - curl
+    - php5-mcrypt
+    - php5-dev
+
+- name: Generate /etc/php5/apache2/php.ini
+  template:
+    src: php.ini.j2
+    dest: /etc/php5/apache2/php.ini
+  notify:
+    - Apache2 restart
+
+
+
+
+

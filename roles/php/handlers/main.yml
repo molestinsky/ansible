@@ -1,0 +1,8 @@
+#handlers/handlers.yml
+---
+- name: Apache2 restart
+  service: name=apache2 state=restarted
+  when: ansible_os_family == "Debian"
+
+- name: Httpd restart
+  service: name=httpd enabled=yes state=restarted

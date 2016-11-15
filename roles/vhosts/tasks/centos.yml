@@ -1,0 +1,15 @@
+#tasks/centos.yml
+---
+- name: Change owner of logs directory
+  file: path={{ site_path }}/{{ domain }}/logs state=directory recurse=yes owner=apache
+
+- name: Create vhosts directory
+  file: path=/etc/httpd/vhosts.d state=directory
+
+- name: Generate /etc/httpd/vhosts.d/{{ domain }}.conf
+  template:
+    src: default.conf.j2
+    dest: "/etc/httpd/vhosts.d/{{ domain }}.conf"
+  notify:
+    - Httpd reload
+

@@ -1,0 +1,25 @@
+#php/tasks/centos.yml
+---
+- name: Install php5
+  yum: name={{item}} state=present
+  with_items:
+    - php
+    - php-mysql
+    - php-gd
+    - php-ldap
+    - php-odbc
+    - php-pear
+    - php-xml
+    - php-xmlrpc
+    - php-snmp
+    - curl
+    - php-mcrypt
+    - php-xml
+
+- name: Generate /etc/php.ini
+  template:
+    src: php.ini.j2
+    dest: /etc/php.ini
+  notify:
+    - Httpd restart
+

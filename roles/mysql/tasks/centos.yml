@@ -1,0 +1,20 @@
+#tasks/centos.yml
+---
+- name: Install MariaDB
+  yum: name={{item}} state=present
+  with_items:
+    - mariadb
+    - mariadb-server
+    - MySQL-python
+
+#Для каждого семейства ОС используется свой шаблон для my.cnf, т.к. сокеты и pid-файлы в MySQL и MariaDB имеют разное название
+- name: Copy .my.cnf file with root password credentials
+  template:
+    src: centos.my.cnf.j2
+    dest: /etc/.my.cnf
+
+- name: Start MariaDB
+  service: name=mariadb state=started enabled=true
+
+- name: Configure database
+  include: dbconfigure.yml

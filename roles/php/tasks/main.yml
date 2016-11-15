@@ -1,0 +1,21 @@
+#php/tasks/main.yml
+---
+- name: Ensure PHP is installed
+  shell: dpkg-query -W php5
+  register: ubuntu_php_installed
+  failed_when: ubuntu_php_installed.rc > 1
+  when: ansible_os_family == "Debian"
+
+- name: Ensure PHP is installed
+  shell: yum list installed php warn=no
+  register: centos_php_installed
+  failed_when: centos_php_installed.rc > 1
+  when: ansible_os_family == "RedHat"
+
+- name: Run CentOS-specific tasks
+  include: centos.yml
+  when: ansible_os_family == "RedHat" and centos_php_installed.rc == 1
+
+- name: Run Ubuntu-specific tasks
+  include: ubuntu.yml
+  when: ansible_os_family == "Debian" and ubuntu_php_installed.rc == 1

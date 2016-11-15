@@ -1,0 +1,22 @@
+#tasks/main.yml
+---
+#Директории не создаются, если они уже существуют
+- name: Create site directories
+  file: path={{ site_path }}/{{ domain }}/{{ item }} state=directory recurse=yes mode="0755" owner={{ user_name }}
+  with_items:
+    - logs
+    - www
+
+- name: Create default index.html file
+  template:
+    src: index.html
+    dest: "{{ site_path }}/{{ domain }}/www/index.html"
+
+- name: Create logfiles
+  file: path={{ site_path }}/{{ domain }}/logs/{{item}} state=touch
+  with_items:
+    - access.log
+    - error.log
+
+- name: Change permissions on the site directory
+  file: path={{ site_path }} state=directory recurse=yes mode="0755"

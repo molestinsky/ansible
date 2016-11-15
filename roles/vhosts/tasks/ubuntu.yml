@@ -1,0 +1,14 @@
+#vhosts/tasks/ubuntu.yml
+---
+- name: Change owner of logs directory
+  file: path={{ site_path }}/logs state=directory recurse=yes owner=www-data
+
+- name: Generate /etc/apache2/sites-available/{{domain}}.conf
+  template:
+    src: vhost.ubuntu.14.04.j2
+    dest: "/etc/apache2/sites-available/{{domain}}.conf"
+
+- name: Enable domain name
+  command: a2ensite {{domain}}.conf
+  notify:
+    -  Apache2 restart
