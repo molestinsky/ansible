@@ -1,4 +1,4 @@
-#site.yml
+#vhosts.yml
 ---
 - hosts: all
   become: true
