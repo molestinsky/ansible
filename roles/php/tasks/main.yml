@@ -1,5 +1,6 @@
 #php/tasks/main.yml
 ---
+# Здесь то же, что и в роли apache
 - name: Ensure PHP is installed
   shell: dpkg-query -W php5
   register: ubuntu_php_installed

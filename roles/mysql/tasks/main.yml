@@ -1,5 +1,6 @@
 #tasks/main.yml
 ---
+# Здесь то же, что и в роли apache
 - name: Ensure MySQL is installed
   shell: dpkg-query -W mysql-server
   register: mysql_installed

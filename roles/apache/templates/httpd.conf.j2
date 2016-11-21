@@ -16,6 +16,8 @@ DocumentRoot /home
     AllowOverride None
 </Directory>
 
+# Это работать не будет, если переменная site_path не определена.
+# Нужно дать ей понятное название и добавить значение по умолчанию в файл с переменными по умолчанию.
 <Directory {{ site_path }}>
     AllowOverride all
     Require all denied
