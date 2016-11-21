@@ -2,6 +2,7 @@
 ---
 - name: Copy .my.cnf file to user directory
   template:
+# Наверное client.my.cnf.j2?
     src: ubuntu.my.cnf.j2
     dest: ~/.my.cnf
 
